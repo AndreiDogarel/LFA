@@ -13,7 +13,8 @@ bool acceptat_NFA;
 
 
 // DFA
-bool check_DFA(string s, int curr){
+bool check_DFA(string s){
+    int curr = 1;
     drum_DFA.push_back(curr);
     int i = 0;
     while(i < s.size()){
@@ -83,49 +84,47 @@ int main(){
         if(cuvant == ".bye"){
             break;
         }
+        else if(cuvant == "LAMBDA"){
+            if(!stare_finala[1]){
+                cout << "neacceptat\n\n";
+            }
+            else{
+                cout << "acceptat\n\n";
+            }
+        }
         else{
-            if(cuvant == "LAMBDA"){
-                if(!stare_finala[1]){
+            if(cer == 1){
+                if(check_DFA(cuvant)){
+                    cout << "acceptat\n";
+                    for(auto i : drum_DFA){
+                        cout << "q" << i << " -> ";
+                    }
+                    cout << "finish\n\n";
+                }
+                else{
+                    cout << "neacceptat\n\n";
+                }
+                drum_DFA.clear();
+            }
+            else{
+                vector<int> drum;
+                drum.push_back(1);
+                check_NFA(drum, cuvant, 1, 0);
+                if(!acceptat_NFA){
                     cout << "neacceptat\n\n";
                 }
                 else{
-                    cout << "acceptat\n\n";
-                }
-            }
-            else{
-                if(cer == 1){
-                    if(check_DFA(cuvant, 1)){
-                        cout << "acceptat\n";
-                        for(auto i : drum_DFA){
-                            cout << "q" << i << " -> ";
+                    cout << "acceptat\n";
+                    for(auto drum : drum_NFA){
+                        for(auto nod : drum){
+                            cout << "q" << nod << " -> ";
                         }
-                        cout << "finish\n\n";
+                        cout << "finish\n";
                     }
-                    else{
-                        cout << "neacceptat\n\n";
-                    }
-                    drum_DFA.clear();
+                    cout << "\n";
+                    acceptat_NFA = false;
                 }
-                else{
-                    vector<int> drum;
-                    drum.push_back(1);
-                    check_NFA(drum, cuvant, 1, 0);
-                    if(!acceptat_NFA){
-                        cout << "neacceptat\n\n";
-                    }
-                    else{
-                        cout << "acceptat\n";
-                        for(auto drum : drum_NFA){
-                            for(auto nod : drum){
-                                cout << "q" << nod << " -> ";
-                            }
-                            cout << "finish\n";
-                        }
-                        cout << "\n";
-                        acceptat_NFA = false;
-                    }
-                    drum_NFA.clear();
-                }
+                drum_NFA.clear();
             }
         }
     }
