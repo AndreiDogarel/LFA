@@ -1,0 +1,16 @@
+q0 -> Stare finala
+q0136 a
+q2356 b
+
+q0136 -> Stare finala
+q0136 a
+q2356 b
+
+q2356 -> Stare finala
+q36 a
+q2356 b
+
+q36 -> Stare finala
+q36 a
+q2356 b
+
