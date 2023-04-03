@@ -95,7 +95,7 @@ int main(){
 
     //////////////// NFA -> DFA ////////////////
     map<string, bool> used;
-    used["q1"] = true;
+    used["q0"] = true;
     pair<vector<int>, string> nod = {{0}, "q0"};
     if(stareFinalaLambdaNFA[0]){
         stareFinalaDFA["q0"] = true;
@@ -105,31 +105,35 @@ int main(){
     while(!q.empty()){
         pair<vector<int>, string> p = q.front();
         q.pop();
-        bool ok = false;
+        for(auto nod : p.first){
+            if(stareFinalaLambdaNFA[nod]){
+                stareFinalaDFA[p.second] = true;
+            }
+        }
         for(auto litera : alfabet){
             vector<int> mult;
             string stare = "q";
             for(auto nod : p.first){
-                if(stareFinalaLambdaNFA[nod]){
-                    ok = true;
-                }
                 for(auto leg : NFA[nod]){
                     if(leg.second == litera && !count(mult.begin(), mult.end(), leg.first)){
                         mult.push_back(leg.first);
                     }
                 }
             }
-            sort(mult.begin(), mult.end());
-            for(auto i : mult){
-                stare += to_string(i);
+            if(mult.size()){
+                sort(mult.begin(), mult.end());
+                for(auto i : mult){
+                    stare += to_string(i) + ",";
+                }
+                stare.pop_back();
+                DFA[p.second].push_back({stare, litera});
+                if(!used[stare]){
+                    q.push({mult, stare});
+                    used[stare] = true;
+                }
             }
-            if(ok){
-                stareFinalaDFA[stare] = true;
-            }
-            DFA[p.second].push_back({stare, litera});
-            if(!used[stare]){
-                q.push({mult, stare});
-                used[stare] = true;
+            else{
+                DFA[p.second].push_back({"-", litera});
             }
         }
     }

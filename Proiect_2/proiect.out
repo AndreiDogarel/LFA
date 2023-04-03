@@ -1,16 +1,40 @@
 q0 -> Stare finala
-q0136 a
-q2356 b
+q2,8 a
+- b
+q4,10 c
 
-q0136 -> Stare finala
-q0136 a
-q2356 b
+q11 -> Stare finala
+- a
+- b
+- c
 
-q2356 -> Stare finala
-q36 a
-q2356 b
+q2,8
+- a
+q3 b
+q9 c
 
-q36 -> Stare finala
-q36 a
-q2356 b
+q3
+q6 a
+- b
+- c
+
+q4,10
+q11 a
+q5 b
+- c
+
+q5
+- a
+- b
+q6 c
+
+q6 -> Stare finala
+q2,8 a
+- b
+q4,10 c
+
+q9 -> Stare finala
+- a
+- b
+- c
 
