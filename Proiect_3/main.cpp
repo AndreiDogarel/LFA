@@ -6,8 +6,6 @@ using namespace std;
 ifstream f("gramatica.in");
 ofstream g("cuvinte.out");
 
-// vector<string> cuvinte = {};
-
 
 class IndexError : public exception {
 public:
@@ -156,7 +154,7 @@ void Meniu::start(){
 
 void Meniu::back(char neterminal, string cuvant, map<char, vector<string>> productii){
     if(cuvant.size() == this->lungimeCuv && findNeterminal(cuvant) == '0'){
-        cuvinte.push_back(cuvant);
+        this->cuvinte.push_back(cuvant);
         return;
     }
     else if(cuvant.size() == this->lungimeCuv + 1 && findNeterminal(cuvant) != '0'){
@@ -168,7 +166,7 @@ void Meniu::back(char neterminal, string cuvant, map<char, vector<string>> produ
             }
         }
         if(lambda){
-            cuvinte.push_back(deleteNeterminal(cuvant));
+            this->cuvinte.push_back(deleteNeterminal(cuvant));
         }
         return;
     }
@@ -178,7 +176,7 @@ void Meniu::back(char neterminal, string cuvant, map<char, vector<string>> produ
             if(productie == "/"){
                 cand = deleteNeterminal(cuvant);
                 if(cand.size() == this->lungimeCuv){
-                    cuvinte.push_back(cand);
+                    this->cuvinte.push_back(cand);
                 }
             }
             else{
@@ -227,7 +225,7 @@ string Meniu::deleteNeterminal(string cuvant){
 }
 
 void Meniu::getResults(){
-    for(auto cuvant : cuvinte){
+    for(auto cuvant : this->cuvinte){
         g << cuvant << "\n";
     }
 }
